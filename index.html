@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="description" content="VVE Web IDE: a vanilla web-based IDE prototype with modern Web APIs and LSP-inspired language tooling." />
+    <title>VVE Web IDE</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <section class="brand" aria-label="Product">
+        <span class="logo" aria-hidden="true">V</span>
+        <div>
+          <h1>VVE Web IDE</h1>
+          <p>Vanilla HTML, CSS, JS and browser-native language tooling.</p>
+        </div>
+      </section>
+      <nav aria-label="Workspace actions">
+        <button id="formatButton" type="button">Format</button>
+        <button id="runButton" type="button">Run Preview</button>
+        <button id="saveButton" type="button">Save</button>
+      </nav>
+    </header>
+
+    <main class="workspace">
+      <aside class="panel explorer" aria-labelledby="explorer-title">
+        <header><h2 id="explorer-title">Explorer</h2></header>
+        <menu id="fileTree" class="file-tree" aria-label="Project files"></menu>
+      </aside>
+
+      <section class="editor-shell" aria-labelledby="editor-title">
+        <header class="tabs">
+          <h2 id="editor-title">Editor</h2>
+          <output id="cursorStatus" aria-live="polite">Ln 1, Col 1</output>
+        </header>
+        <div class="editor-grid">
+          <pre id="lineNumbers" class="line-numbers" aria-hidden="true">1</pre>
+          <pre id="editor" class="editor" role="textbox" aria-label="Code editor" aria-multiline="true" spellcheck="false" contenteditable="plaintext-only"></pre>
+        </div>
+        <section class="intellisense" aria-label="IntelliSense results">
+          <h3>Completions</h3>
+          <div id="completions" class="chips"></div>
+        </section>
+      </section>
+
+      <aside class="panel insights" aria-label="Language server insights">
+        <section>
+          <h2>Diagnostics</h2>
+          <ol id="diagnostics" class="diagnostics"></ol>
+        </section>
+        <section>
+          <h2>Outline</h2>
+          <ol id="outline" class="outline"></ol>
+        </section>
+        <section>
+          <h2>Runtime</h2>
+          <output id="runtimeLog">Ready.</output>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="statusbar">
+      <span id="highlightSupport">Detecting CSS Highlights API…</span>
+      <span>Worker LSP bridge active</span>
+      <span id="saveState">Not saved</span>
+    </footer>
+  </body>
+</html>
