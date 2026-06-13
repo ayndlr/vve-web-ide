@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#1f1f1f" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="description" content="VVE Web IDE is an offline-first vanilla web IDE with VS Code-inspired UI and LSP server support." />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+    <title>VVE Web IDE</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <header class="titlebar" role="banner">
+      <section class="window-brand" aria-label="Application">
+        <img src="/icons/icon.svg" alt="" width="28" height="28" />
+        <div>
+          <h1>VVE Web IDE</h1>
+          <p>Offline-first • vanilla JS • WebSocket LSP-ready</p>
+        </div>
+      </section>
+      <form id="lspForm" class="command-center" aria-label="Language server connection">
+        <label for="lspUrl">LSP WebSocket</label>
+        <input id="lspUrl" name="lspUrl" type="url" inputmode="url" placeholder="ws://localhost:3001/lsp" autocomplete="url" />
+        <button type="submit">Connect</button>
+      </form>
+      <nav class="title-actions" aria-label="IDE actions">
+        <button id="installButton" type="button" hidden>Install</button>
+        <button id="themeButton" type="button" aria-pressed="false">Theme</button>
+        <button id="saveButton" type="button">Save</button>
+      </nav>
+    </header>
+
+    <main class="ide" data-sidebar="open">
+      <aside class="activitybar" aria-label="Primary views">
+        <button class="active" type="button" aria-label="Explorer" data-view="explorer">⌘</button>
+        <button type="button" aria-label="Search" data-view="search">⌕</button>
+        <button type="button" aria-label="Problems" data-view="problems">⚠</button>
+        <button type="button" aria-label="Settings" data-view="settings">⚙</button>
+      </aside>
+
+      <aside class="sidebar" aria-label="Workspace sidebar">
+        <section id="explorerView" class="view active" aria-labelledby="explorer-title">
+          <header class="view-header"><h2 id="explorer-title">Explorer</h2></header>
+          <menu id="fileTree" class="file-tree" aria-label="Project files"></menu>
+          <button id="newFileButton" class="wide-action" type="button">New File</button>
+        </section>
+        <section id="searchView" class="view" aria-labelledby="search-title">
+          <header class="view-header"><h2 id="search-title">Search</h2></header>
+          <label class="field">Find in workspace<input id="searchInput" type="search" placeholder="Search text" /></label>
+          <ol id="searchResults" class="results"></ol>
+        </section>
+        <section id="problemsView" class="view" aria-labelledby="problems-title">
+          <header class="view-header"><h2 id="problems-title">Problems</h2></header>
+          <ol id="diagnostics" class="diagnostics"></ol>
+        </section>
+        <section id="settingsView" class="view" aria-labelledby="settings-title">
+          <header class="view-header"><h2 id="settings-title">Settings</h2></header>
+          <label class="field">Editor font size<input id="fontSize" type="range" min="12" max="22" value="14" /></label>
+          <label class="field">Tab size<input id="tabSize" type="range" min="2" max="8" value="2" /></label>
+        </section>
+      </aside>
+
+      <section class="workbench" aria-labelledby="editor-title">
+        <header class="tabs" role="tablist" aria-label="Open editors">
+          <button id="activeTab" class="tab active" type="button" role="tab" aria-selected="true">index.html</button>
+          <output id="syncState">Indexed locally</output>
+        </header>
+
+        <section class="editor-pane">
+          <h2 id="editor-title" class="sr-only">Code editor</h2>
+          <div class="editor-toolbar" aria-label="Editor toolbar">
+            <button id="sidebarButton" type="button">☰</button>
+            <button id="formatButton" type="button">Format</button>
+            <button id="runButton" type="button">Preview</button>
+            <output id="cursorStatus" aria-live="polite">Ln 1, Col 1</output>
+          </div>
+          <div class="editor-grid">
+            <pre id="lineNumbers" class="line-numbers" aria-hidden="true">1</pre>
+            <pre id="highlightLayer" class="highlight-layer" aria-hidden="true"></pre>
+            <textarea id="editor" class="editor" aria-label="Code editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>
+          </div>
+        </section>
+
+        <footer class="panel terminal-panel">
+          <section aria-labelledby="terminal-title">
+            <h2 id="terminal-title">Terminal / Preview</h2>
+            <output id="runtimeLog">Ready. Run a local LSP bridge, then connect with ws://localhost:3001/lsp.</output>
+          </section>
+          <section aria-labelledby="outline-title">
+            <h2 id="outline-title">Outline</h2>
+            <ol id="outline" class="outline"></ol>
+          </section>
+          <section aria-labelledby="completion-title">
+            <h2 id="completion-title">Completions</h2>
+            <div id="completions" class="chips"></div>
+          </section>
+        </footer>
+      </section>
+    </main>
+
+    <footer class="statusbar" role="contentinfo">
+      <span id="lspState">Local worker language service</span>
+      <span id="highlightSupport">Detecting CSS Highlights API…</span>
+      <span id="pwaState">Offline cache pending</span>
+      <span id="saveState">Not saved</span>
+    </footer>
+  </body>
+</html>

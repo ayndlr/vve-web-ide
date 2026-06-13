@@ -1,0 +1,17 @@
+{
+  "name": "VVE Web IDE",
+  "short_name": "VVE IDE",
+  "description": "Offline-first vanilla web IDE with VS Code-inspired UI and WebSocket LSP support.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#1f1f1f",
+  "theme_color": "#1f1f1f",
+  "orientation": "any",
+  "icons": [
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Open IDE", "url": "/", "description": "Launch the VVE Web IDE workspace" }
+  ]
+}
